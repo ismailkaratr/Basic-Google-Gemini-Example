@@ -21,6 +21,12 @@
         </div>
     </div>
     <script>
+        function getCookie(cookie){
+            return document.cookie
+              .split("; ")
+              .find((row) => row.startsWith(`${cookie}=`))
+              ?.split("=")[1];
+        }
         let prompt = document.querySelector("#prompt");
         let send = document.querySelector("#send");
         let result = document.querySelector("#result");
@@ -39,7 +45,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body:JSON.stringify({prompt : value,uuid:document.cookie.replace('chat=','')})
+                body:JSON.stringify({prompt : value,uuid:getCookie('chat')})
             })).json();
             window.data = data;
             result.innerHTML += `<pre style="background: #eaeaea;padding: 20px;border-radius: 15px;text-wrap:balance">${data.result}</pre>`
