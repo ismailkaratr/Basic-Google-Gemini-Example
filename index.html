@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <textarea name="prompt" id="prompt" cols="30" rows="10" style="width: 100%;"></textarea>
+    <button id="send" style="width: 100%;">Gönder</button>
+    <hr>
+    <div id="result" style="padding: 10px;"></div>
+    <script>
+        let prompt = document.querySelector("#prompt");
+        let send = document.querySelector("#send");
+        let result = document.querySelector("#result");
+        send.addEventListener("click",async function(){
+            result.innerHTML = "Yükleniyor........"
+            data = await(await fetch("/",{
+                method:'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({prompt : prompt.value})
+            })).json();
+            window.data = data;
+            result.innerHTML = `<pre style="background: #eaeaea;padding: 20px;border-radius: 15px;text-wrap:balance">${data.result}</pre>`
+        });
+    </script>
+</body>
+</html>
